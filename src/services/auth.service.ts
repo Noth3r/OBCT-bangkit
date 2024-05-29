@@ -1,6 +1,10 @@
 import {getAuth, UserRecord } from 'firebase-admin/auth';
 import db from '../utils/db';
 
+export const getBearerToken = (authorization: string) => {
+    return authorization.split('Bearer ')[1];
+}
+
 export const verifyToken = async (token: string) => {
     return getAuth().verifyIdToken(token).then((decodedToken) => {
         return decodedToken;
@@ -18,15 +22,13 @@ export const getUser = async (token: string) => {
 }
 
 export const createUser = async (user: UserRecord) => {
-    await db.user.create({
+    return await db.user.create({
         data: {
             id: user.uid,
             email: user.email!,
             name: user.displayName!,
             picture: user.photoURL
         }});
-
-    return user;
 }
 
 export const findUser = async (id: string) => {

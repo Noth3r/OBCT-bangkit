@@ -6,8 +6,16 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { options } from './utils/swagger';
 import router from './routes';
+import { cert, initializeApp } from 'firebase-admin/app';
 
 dotenv.config();
+
+const serviceAccount = require('./config/firebase-admin.json');
+
+initializeApp({
+    credential: cert(serviceAccount),
+    databaseURL: process.env.FIREBASE_DB_URL
+});
 
 const app:Express = express();
 app.use(helmet())

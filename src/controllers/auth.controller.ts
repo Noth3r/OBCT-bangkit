@@ -13,9 +13,8 @@ export const login = async (req: Request, res: Response) => {
     if (!decodedToken) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-
-    const user = await getUser(token);
-
+    
+    const user = await getUser(decodedToken.uid);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

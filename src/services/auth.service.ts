@@ -1,5 +1,4 @@
-import {getAuth, UserRecord } from 'firebase-admin/auth';
-import db from '../utils/db';
+import {getAuth } from 'firebase-admin/auth';
 
 export const getBearerToken = (authorization: string) => {
     return authorization.split('Bearer ')[1];
@@ -21,21 +20,5 @@ export const getUser = async (token: string) => {
     });
 }
 
-export const createUser = async (user: UserRecord) => {
-    return await db.user.create({
-        data: {
-            id: user.uid,
-            email: user.email!,
-            name: user.displayName!,
-            picture: user.photoURL
-        }});
-}
 
-export const findUser = async (id: string) => {
-    return db.user.findUnique({
-        where: {
-            id
-        }
-    });
-}
 

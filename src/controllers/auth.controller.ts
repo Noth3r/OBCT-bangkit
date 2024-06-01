@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { createUser, findUser, getBearerToken, getUser, verifyToken } from "../services/auth.service";
+import {getBearerToken } from "../services/auth.service";
+import { updateUser } from "../services/user.service";
 
-export const login = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
   const token = getBearerToken(req.headers.authorization!);
 
   if (!token) {
@@ -9,20 +10,13 @@ export const login = async (req: Request, res: Response) => {
   }
 
   try {
-    const decodedToken = await verifyToken(token);
-    if (!decodedToken) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-    
-    const user = await getUser(decodedToken.uid);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    if (req.user.isRegistered) {
+      return res.status(400).json({ message: "User is already registered" });
     }
 
-    const isFirstTime = user.metadata.creationTime === user.metadata.lastSignInTime;
-    const createdUser = isFirstTime ? await createUser(user) : await findUser(user.uid);
+    const newUser = await updateUser(req.user.id, { isRegistered: true, dateOfBirth: req.body.dateOfBirth });
 
-    return res.status(200).json(createdUser);
+    return res.status(200).json(newUser);
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error" });
   }

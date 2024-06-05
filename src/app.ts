@@ -28,7 +28,7 @@ app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerOptions, {
     explorer: true
 }))
 
-app.use(router)
+app.use("/api", router)
 
 app.use((req, res) => {
     res.status(404).json({message: 'Not Found'})

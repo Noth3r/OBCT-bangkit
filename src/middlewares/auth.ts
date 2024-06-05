@@ -15,21 +15,21 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
             return res.status(401).json({ message: "Unauthorized" });
         }
 
-        const user = await getUser(decodedToken.uid);
-        if (!user) {
-          return res.status(404).json({ message: "User not found" });
-        }
-    
-        const isFirstTime = user.metadata.creationTime === user.metadata.lastSignInTime;
-        const createdUser = isFirstTime ? await createUser(user) : await findUser(user.uid);
+        let createdUser = await findUser(decodedToken.uid);
 
         if (!createdUser) {
-            return res.status(404).json({ message: "User not found" });
+            const user = await getUser(decodedToken.uid);
+            if (!user) {
+              return res.status(404).json({ message: "User not found" });
+            }
+
+            createdUser = await createUser(user);
         }
 
         req.user = createdUser;
         next();
     } catch (error) {
+        console.error('Authentication error:', error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 }

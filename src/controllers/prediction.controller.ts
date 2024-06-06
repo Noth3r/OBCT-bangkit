@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+    getLatestInput,
   getPredictionApi,
   saveInput,
   savePrediction,
@@ -32,3 +33,20 @@ export const predict = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const lastInput = async (req: Request, res: Response) => {
+    try {
+        const { user } = req;
+    
+        const lastInput = await getLatestInput(user.id);
+    
+        if (!lastInput) {
+        return res.status(404).json({ message: "No input found" });
+        }
+    
+        return res.status(200).json(lastInput);
+    } catch (error) {
+        console.error("Last input error:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+    }

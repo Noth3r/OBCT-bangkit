@@ -18,7 +18,6 @@ initializeApp({
 });
 
 const app:Express = express();
-app.use(helmet())
 app.use(express.json())
 app.use(cors())
 
@@ -26,8 +25,10 @@ const swaggerOptions = swaggerJsdoc(options)
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerOptions, {
     explorer: true
-}))
+    }))
 
+app.use(helmet())
+    
 app.use("/api", router)
 
 app.use((req, res) => {

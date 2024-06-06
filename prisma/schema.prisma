@@ -13,13 +13,87 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Gender {
+  Male
+  Female
+}
+
 model User {
-  id           String    @id @default(cuid())
-  email        String    @unique
-  name         String
-  picture      String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  isRegistered Boolean   @default(false)
-  dateOfBirth  DateTime?
+  id             String           @id @default(cuid())
+  email          String           @unique
+  name           String
+  picture        String?
+  gender         Gender?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  isRegistered   Boolean          @default(false)
+  dateOfBirth    DateTime?
+  InputData      InputData[]
+  Prediction     Prediction[]
+  Recommendation Recommendation[]
+  Interaction    Interaction[]
+}
+
+model InputData {
+  id                                     String      @id @default(cuid())
+  userId                                 String
+  user                                   User        @relation(fields: [userId], references: [id])
+  height                                 Float
+  weight                                 Float
+  family_history_with_overweight         Int
+  frequently_consumed_high_calorie_food  Int
+  frequency_of_consumption_of_vegetables Int
+  number_of_main_meals                   Int
+  consumption_of_food_between_meals      Int
+  smoke                                  Int
+  consumption_of_water_daily             Int
+  monitor_calorie_intake                 Int
+  frequency_of_physical_activity         Int
+  time_using_electronic_devices          Int
+  consumption_of_alcohol                 Int
+  type_of_transportation_used            Int
+  createdAt                              DateTime    @default(now())
+  updatedAt                              DateTime    @updatedAt
+  Prediction                             Prediction?
+
+  @@index([userId])
+}
+
+model Prediction {
+  id             String           @id @default(cuid())
+  userId         String
+  user           User             @relation(fields: [userId], references: [id])
+  inputDataId    String           @unique
+  inputData      InputData        @relation(fields: [inputDataId], references: [id])
+  prediction     Float
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  Recommendation Recommendation[]
+
+  @@index([userId, inputDataId])
+}
+
+model Recommendation {
+  id             String     @id @default(cuid())
+  userId         String
+  user           User       @relation(fields: [userId], references: [id])
+  predictionId   String
+  prediction     Prediction @relation(fields: [predictionId], references: [id])
+  recommendation String
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@index([userId, predictionId])
+}
+
+model Interaction {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  interactionText String
+  responseText    String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([userId])
 }

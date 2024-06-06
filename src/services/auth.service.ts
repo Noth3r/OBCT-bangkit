@@ -1,7 +1,7 @@
 import {getAuth } from 'firebase-admin/auth';
 
 export const getBearerToken = (authorization: string) => {
-    return authorization.split('Bearer ')[1];
+    return authorization?.split('Bearer ')[1];
 }
 
 export const verifyToken = async (token: string) => {

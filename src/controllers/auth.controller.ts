@@ -10,9 +10,14 @@ export const register = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "User is already registered" });
     }
 
+    if (!body.dateOfBirth || !body.gender) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
     const updatedData: Partial<User> = {
       isRegistered: true,
       dateOfBirth: body.dateOfBirth,
+      gender: body.gender,
     };
 
     const optionalFields: (keyof User)[] = ["name", "picture"];

@@ -14,8 +14,8 @@ datasource db {
 }
 
 enum Gender {
-  Male
-  Female
+  male
+  female
 }
 
 model User {

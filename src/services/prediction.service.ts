@@ -1,7 +1,11 @@
 import { Gender, Prisma, User } from "@prisma/client";
 import db from "../utils/db";
 
-export const getInputWithPrediction = async (userId: string, skip?: number, take?: number) => {
+export const getInputWithPrediction = async (
+  userId: string,
+  skip?: number,
+  take?: number
+) => {
   return db.inputData.findMany({
     skip,
     take,
@@ -12,13 +16,16 @@ export const getInputWithPrediction = async (userId: string, skip?: number, take
       Prediction: {
         include: {
           Recommendation: true,
-        }
-      }
+        },
+      },
     },
   });
 };
 
-export const getInputWithPredictionById = async (id: string, userId: string) => {
+export const getInputWithPredictionById = async (
+  id: string,
+  userId: string
+) => {
   return db.inputData.findUnique({
     where: {
       id,
@@ -28,13 +35,15 @@ export const getInputWithPredictionById = async (id: string, userId: string) => 
       Prediction: {
         include: {
           Recommendation: true,
-        }
-      }
+        },
+      },
     },
   });
 };
 
-export const saveInput = async (inputData: Prisma.InputDataUncheckedCreateInput) => {
+export const saveInput = async (
+  inputData: Prisma.InputDataUncheckedCreateInput
+) => {
   return db.inputData.create({
     data: inputData,
   });
@@ -51,13 +60,17 @@ export const getLatestInput = async (userId: string) => {
   });
 };
 
-export const saveRecomendation = async (recommendation: Prisma.RecommendationUncheckedCreateInput) => {
+export const saveRecomendation = async (
+  recommendation: Prisma.RecommendationUncheckedCreateInput
+) => {
   return db.recommendation.create({
     data: recommendation,
   });
-}
+};
 
-export const savePrediction = async (prediction: Prisma.PredictionUncheckedCreateInput) => {
+export const savePrediction = async (
+  prediction: Prisma.PredictionUncheckedCreateInput
+) => {
   return db.prediction.create({
     data: prediction,
   });

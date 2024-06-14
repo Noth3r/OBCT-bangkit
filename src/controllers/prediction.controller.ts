@@ -28,7 +28,7 @@ export const predict = async (req: Request, res: Response) => {
     const data = await savePrediction({
       userId: user.id,
       inputDataId: savedInput.id,
-      prediction: prediction.prediction
+      prediction: prediction.prediction,
     });
 
     if (!data) {
@@ -52,7 +52,7 @@ export const predict = async (req: Request, res: Response) => {
         Recommendation: {
           ...recRes,
         },
-      }
+      },
     };
 
     return res.status(200).json(result);
@@ -68,7 +68,8 @@ export const getAllHistory = async (req: Request, res: Response) => {
 
     const { skip, take } = req.query;
 
-    const history = await getInputWithPrediction(user.id, 
+    const history = await getInputWithPrediction(
+      user.id,
       skip ? parseInt(skip as string) : undefined,
       take ? parseInt(take as string) : undefined
     );

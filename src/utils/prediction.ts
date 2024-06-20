@@ -1,3 +1,144 @@
+import { Gender } from "@prisma/client";
+
+export const convertAge = (dateOfBirth: Date) => {
+  const diff = Date.now() - dateOfBirth.getTime();
+  const ageDate = new Date(diff);
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+};
+
+export const convertGenderToInt = (gender: Gender) => {
+  return gender.toLowerCase() == "male" ? 1 : 0;
+};
+
+export const convertPrediction = (prediction: number) => {
+  switch (prediction) {
+    case 0:
+      return "Insufficient Weight";
+    case 1:
+      return "Normal Weight";
+    case 2:
+      return "Overweight 1";
+    case 3:
+      return "Overweight 2";
+    case 4:
+      return "Obesity Level 1";
+    case 5:
+      return "Obesity Level 2";
+    case 6:
+      return "Obesity Level 3";
+    default:
+      return "Unknown";
+  }
+};
+
+export const convertParametersBoolean = (input: number) => {
+  return input == 1 ? "Yes" : "No";
+};
+
+export const convertParameters = (input: number, index: number) => {
+  if (index == 7) {
+    switch (input) {
+      case 1:
+        return "Never";
+      case 2:
+        return "Sometimes";
+      case 3:
+        return "Always";
+      default:
+        return "Unknown";
+    }
+  } else if (index == 8) {
+    switch (input) {
+      case 1:
+        return "1 or 2 meals";
+      case 2:
+        return "3 meals";
+      case 3:
+        return "More than 3 meals";
+      default:
+        return "Unknown";
+    }
+  } else if (index == 9) {
+    switch (input) {
+      case 0:
+        return "No";
+      case 1:
+        return "Sometimes";
+      case 2:
+        return "Frequently";
+      case 3:
+        return "Always";
+      default:
+        return "Unknown";
+    }
+  } else if (index == 11) {
+    switch (input) {
+      case 1:
+        return "Less than 1 liter";
+      case 2:
+        return "1-2 liters";
+      case 3:
+        return "More than 2 liters";
+      default:
+        return "Unknown";
+    }
+  } else if (index == 13) {
+    switch (input) {
+      case 0:
+        return "No physical activity";
+      case 1:
+        return "1-2 days a week";
+      case 2:
+        return "3-4 days a week";
+      case 3:
+        return "5 or more days a week";
+      default:
+        return "Unknown";
+    }
+  } else if (index == 14) {
+    switch (input) {
+      case 0:
+        return "0-2 hours";
+      case 1:
+        return "3-5 hours";
+      case 2:
+        return "More than 5 hours";
+      default:
+        return "Unknown";
+    }
+  } else if (index == 15) {
+    switch (input) {
+      case 0:
+        return "Never";
+      case 1:
+        return "Sometimes";
+      case 2:
+        return "Frequently";
+      case 3:
+        return "Always";
+      default:
+        return "Unknown";
+    }
+  } else if (index == 16) {
+    switch (input) {
+      case 0:
+        return "Bike";
+      case 1:
+        return "Motorbike";
+      case 2:
+        return "Walking";
+      case 3:
+        return "Automobile";
+      case 4:
+        return "Public Transportation";
+      default:
+        return "Unknown";
+    }
+  } else {
+    return "Unknown";
+  }
+};
+
 export const reccomendation = [
   {
     class: [0],

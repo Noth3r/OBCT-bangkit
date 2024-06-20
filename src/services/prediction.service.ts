@@ -1,5 +1,6 @@
-import { Gender, Prisma, User } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 import db from "../utils/db";
+import { convertAge, convertGenderToInt } from "../utils/prediction";
 
 export const getInputWithPrediction = async (
   userId: string,
@@ -127,14 +128,4 @@ export const getPredictionApi = async (
 
   const data = await res.json();
   return data;
-};
-
-const convertAge = (dateOfBirth: Date) => {
-  const diff = Date.now() - dateOfBirth.getTime();
-  const ageDate = new Date(diff);
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
-};
-
-const convertGenderToInt = (gender: Gender) => {
-  return gender.toLowerCase() == "male" ? 1 : 0;
 };

@@ -9,6 +9,7 @@ import {
   saveRecomendation,
 } from "../services/prediction.service";
 import { reccomendation } from "../utils/prediction";
+import { llmRecommendation } from "../services/llm.service";
 
 export const predict = async (req: Request, res: Response) => {
   try {
@@ -35,14 +36,26 @@ export const predict = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Failed to save prediction" });
     }
 
-    const recommendation = reccomendation.find((r) =>
-      r.class.includes(prediction.prediction)
-    );
+    let recList;
+
+    try {
+      recList = await llmRecommendation(
+        { ...savedInput, ...user },
+        prediction.prediction
+      );
+      console.log(recList);
+    } catch (error) {
+      console.error("Recommendation error:", error);
+
+      recList = reccomendation.find((r) =>
+        r.class.includes(prediction.prediction)
+      )?.recommendation;
+    }
 
     const recRes = await saveRecomendation({
       predictionId: data.id,
       userId: user.id,
-      recommendation: recommendation?.recommendation || "",
+      recommendation: recList || "",
     });
 
     const result = {

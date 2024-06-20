@@ -10,6 +10,9 @@ export const getInputWithPrediction = async (
   return db.inputData.findMany({
     skip,
     take,
+    orderBy: {
+      createdAt: "desc",
+    },
     where: {
       userId,
     },
@@ -79,6 +82,9 @@ export const savePrediction = async (
 
 export const getAllPredictions = async (userId: string) => {
   return db.prediction.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
     where: {
       userId,
     },

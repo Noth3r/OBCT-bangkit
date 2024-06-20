@@ -2,15 +2,14 @@ import dotenv from "dotenv";
 import express, { Express } from "express";
 import helmet from "helmet";
 import cors from "cors";
-import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import { options } from "./utils/swagger";
 import router from "./routes";
 import { cert, initializeApp } from "firebase-admin/app";
 
 dotenv.config();
 
 const serviceAccount = require("./config/firebase-admin.json");
+const swaggerFile = require("./utils/swagger-output.json");
 
 initializeApp({
   credential: cert(serviceAccount),
@@ -21,12 +20,10 @@ const app: Express = express();
 app.use(express.json());
 app.use(cors());
 
-const swaggerOptions = swaggerJsdoc(options);
-
 app.use(
   "/api/docs",
   swaggerUi.serve,
-  swaggerUi.setup(swaggerOptions, {
+  swaggerUi.setup(swaggerFile, {
     explorer: true,
   })
 );

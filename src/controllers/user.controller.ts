@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 export const getProfile = async (req: Request, res: Response) => {
+  // #swagger.tags = ['User']
   try {
     const { user } = req;
     return res.status(200).json(user);

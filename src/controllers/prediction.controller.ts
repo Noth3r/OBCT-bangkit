@@ -12,6 +12,7 @@ import { reccomendation } from "../utils/prediction";
 import { llmRecommendation } from "../services/llm.service";
 
 export const predict = async (req: Request, res: Response) => {
+  // #swagger.tags = ['Prediction']
   try {
     const { user, body, token } = req;
 
@@ -76,6 +77,7 @@ export const predict = async (req: Request, res: Response) => {
 };
 
 export const getAllHistory = async (req: Request, res: Response) => {
+  // #swagger.tags = ['Prediction']
   try {
     const { user } = req;
 
@@ -99,6 +101,7 @@ export const getAllHistory = async (req: Request, res: Response) => {
 };
 
 export const getHistoryById = async (req: Request, res: Response) => {
+  // #swagger.tags = ['Prediction']
   try {
     const { user } = req;
     const { id } = req.params;
@@ -117,6 +120,7 @@ export const getHistoryById = async (req: Request, res: Response) => {
 };
 
 export const lastInput = async (req: Request, res: Response) => {
+  // #swagger.tags = ['Prediction']
   try {
     const { user } = req;
 

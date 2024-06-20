@@ -3,6 +3,7 @@ import { updateUser } from "../services/user.service";
 import { User } from "@prisma/client";
 
 export const register = async (req: Request, res: Response) => {
+  // #swagger.tags = ['Auth']
   try {
     const { user, body } = req;
 

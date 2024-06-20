@@ -56,8 +56,6 @@ export const llmRecommendation = async (
 
   parts.push(...data);
 
-  console.log(parts);
-
   const result = await model.generateContent({
     contents: [{ role: "user", parts }],
     generationConfig,

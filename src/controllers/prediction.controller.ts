@@ -44,7 +44,6 @@ export const predict = async (req: Request, res: Response) => {
         { ...savedInput, ...user },
         prediction.prediction
       );
-      console.log(recList);
     } catch (error) {
       console.error("Recommendation error:", error);
 

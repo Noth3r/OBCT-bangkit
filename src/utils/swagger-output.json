@@ -13,9 +13,7 @@
   "paths": {
     "/api/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "description": "",
         "parameters": [
           {
@@ -50,10 +48,10 @@
                 "type": "object",
                 "properties": {
                   "dateOfBirth": {
-                    "example": "any"
+                    "example": "2002-06-06T10:33:24.266Z"
                   },
                   "gender": {
-                    "example": "any"
+                    "example": "male"
                   }
                 }
               }
@@ -64,9 +62,7 @@
     },
     "/api/user/profile": {
       "get": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "description": "",
         "parameters": [
           {
@@ -95,9 +91,7 @@
     },
     "/api/prediction/": {
       "post": {
-        "tags": [
-          "Prediction"
-        ],
+        "tags": ["Prediction"],
         "description": "",
         "parameters": [
           {
@@ -124,14 +118,65 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "height": {
+                    "example": 1.6
+                  },
+                  "weight": {
+                    "example": 60
+                  },
+                  "family_history_with_overweight": {
+                    "example": 0
+                  },
+                  "frequently_consumed_high_calorie_food": {
+                    "example": 0
+                  },
+                  "frequency_of_consumption_of_vegetables": {
+                    "example": 2
+                  },
+                  "number_of_main_meals": {
+                    "example": 2
+                  },
+                  "consumption_of_food_between_meals": {
+                    "example": 1
+                  },
+                  "smoke": {
+                    "example": 0
+                  },
+                  "consumption_of_water_daily": {
+                    "example": 1
+                  },
+                  "monitor_calorie_intake": {
+                    "example": 0
+                  },
+                  "frequency_of_physical_activity": {
+                    "example": 1
+                  },
+                  "time_using_electronic_devices": {
+                    "example": 2
+                  },
+                  "consumption_of_alcohol": {
+                    "example": 0
+                  },
+                  "type_of_transportation_used": {
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
     "/api/prediction/last": {
       "get": {
-        "tags": [
-          "Prediction"
-        ],
+        "tags": ["Prediction"],
         "description": "",
         "parameters": [
           {
@@ -160,9 +205,7 @@
     },
     "/api/prediction/history": {
       "get": {
-        "tags": [
-          "Prediction"
-        ],
+        "tags": ["Prediction"],
         "description": "",
         "parameters": [
           {
@@ -205,9 +248,7 @@
     },
     "/api/prediction/history/{id}": {
       "get": {
-        "tags": [
-          "Prediction"
-        ],
+        "tags": ["Prediction"],
         "description": "",
         "parameters": [
           {
